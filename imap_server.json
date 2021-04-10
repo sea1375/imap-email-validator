@@ -2,5 +2,8 @@
     "mail.ru": "imap.mail.ru",
     "yahoo": "imap.mail.yahoo.com",
     "gmail": "imap.gmail.com",
-    "yandex": "imap.yandex.com"
+    "yandex": "imap.yandex.com",
+    "live.co.uk": "imap-mail.outlook.com",
+    "hotmail": "imap-mail.outlook.com",
+    "ntlworld": "imap.ntlworld.com"
 }
