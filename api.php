@@ -7,7 +7,7 @@
 
     // var_dump($inbox);
     $imap_server = $_POST['imap_server'];
-    $host = "{" . $imap_server . ":993/imap/ssl}INBOX";
+    $host = "{" . $imap_server . ":993/imap/ssl/novalidate-cert}";
     $username = $_POST['imap_server'];
     $password = $_POST['imap_server'];
 
