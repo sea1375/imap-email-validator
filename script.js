@@ -161,7 +161,10 @@ $(function () {
 
     function validateNext(index) {
         index++;
-        if (index == email_list.length) return;
+        if (index == email_list.length) {
+            alert('validation finished');
+            return;
+        }
         validateEmail(index);
     }
 
