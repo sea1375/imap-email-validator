@@ -113,7 +113,7 @@ $(function () {
         email = email_list[index];
         var imap_server;
         for (var key in imap_servers) {
-            if (email.username.indexOf(key)) {
+            if (email.username.indexOf(key) > -1) {
                 imap_server = imap_servers[key];
                 continue;
             }
