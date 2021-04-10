@@ -13,9 +13,16 @@
 
     try {
         $inbox = imap_open($host,$username,$password);
-        echo json_encode(array(
-            'success' => true
-        ));
+        if ($inbox) {
+            echo json_encode(array(
+                'success' => true
+            ));
+        } else {
+            echo json_encode(array(
+                'success' => false
+            ));
+        }
+        
     } catch (Exception $e) {
         echo json_encode(array(
             'success' => false
