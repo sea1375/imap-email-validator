@@ -132,15 +132,21 @@ $(function () {
                     password: email.password
                 },
                 success: function (data, textStatus) {
-                    var res = JSON.parse(data);
-                    if (res.success) {
+                    try {
+                        var res = JSON.parse(data);
+                        if (res.success) {
 
-                        addValidEmail(email.username);
-                    } else {
+                            addValidEmail(email.username);
+                        } else {
+                            addInvalidEmail(email.username);
+                        }
+
+                        validateNext(index)
+                    } catch (e) {
                         addInvalidEmail(email.username);
+                        validateNext(index)
                     }
 
-                    validateNext(index)
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     addInvalidEmail(email.username);
