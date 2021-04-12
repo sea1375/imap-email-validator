@@ -13,7 +13,14 @@
 
 <body>
     <div class="container" style="margin-top: 20px">
-
+        <div class="row">
+            <div class="col-auto">
+                <input type="text" class="form-control" id="searchkey" placeholder="Keywords for search">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3" id="btn_search">Search Email</button>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-7">
                 <div class="card">
@@ -22,11 +29,14 @@
                         <div class="email-list" id="all-emails">
                             <div class="item">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="fw-bold">Email</label>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="fw-bold">password</label>
+                                    <div class="col-md-5">
+                                        <label class="fw-bold">Password</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="fw-bold">Status</label>
                                     </div>
                                 </div>
                             </div>
@@ -38,7 +48,7 @@
             <div class="col-md-5">
                 <div class="card">
                     <div class="card-body">
-                        <h3>Valid Emails</h3>
+                        <h3>Searched Emails</h3>
 
                         <div class="email-list" id="valid-emails">
                             <div class="item">

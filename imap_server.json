@@ -5,5 +5,8 @@
     "yandex": "imap.yandex.com",
     "live.co.uk": "imap-mail.outlook.com",
     "hotmail": "imap-mail.outlook.com",
-    "ntlworld": "imap.ntlworld.com"
+    "ntlworld": "imap.ntlworld.com",
+    "aol.com": "imap.aol.com",
+    "mail.com": "imap.mail.com",
+    "btinternet": "mail.btinternet.com"
 }
