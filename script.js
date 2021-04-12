@@ -139,53 +139,55 @@ $(function () {
 
     function validateEmail(index) {
         email = email_list[index];
-        var imap_server;
+        var imap_server = getImapServer(email.username);
+
+
+        $.ajax({
+            method: 'post',
+            url: 'api.php',
+            data: {
+                imap_server: imap_server,
+                username: email.username,
+                password: email.password
+            },
+            success: function (data, textStatus) {
+                try {
+                    var res = JSON.parse(data);
+                    if (res.success) {
+
+                        addValidEmail(index);
+                    } else {
+                        addInvalidEmail(index);
+                    }
+
+                    validateNext(index)
+                } catch (e) {
+                    addInvalidEmail(index);
+                    validateNext(index)
+                }
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                addInvalidEmail(index);
+
+                validateNext(index)
+            }
+        })
+
+
+    }
+
+    function getImapServer(email) {
         for (var key in imap_servers) {
-            if (email.username.indexOf(key) > -1) {
-                imap_server = imap_servers[key];
-                continue;
+            if (email.indexOf(key) > -1) {
+                return imap_servers[key];
             }
         }
 
-        if (!imap_server) {
-            console.log("there isn't IMAP server for " + email.username);
-            addInvalidEmail(index);
-            validateNext(index);
-        } else {
-            $.ajax({
-                method: 'post',
-                url: 'api.php',
-                data: {
-                    imap_server: imap_server,
-                    username: email.username,
-                    password: email.password
-                },
-                success: function (data, textStatus) {
-                    try {
-                        var res = JSON.parse(data);
-                        if (res.success) {
-
-                            addValidEmail(index);
-                        } else {
-                            addInvalidEmail(index);
-                        }
-
-                        validateNext(index)
-                    } catch (e) {
-                        addInvalidEmail(index);
-                        validateNext(index)
-                    }
-
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    addInvalidEmail(index);
-
-                    validateNext(index)
-                }
-            })
-        }
-
-
+        var i1 = email.indexOf('@');
+        var i2 = email.indexOf(':');
+        var email_right = email.substr(i1 + 1, i2 - i1);
+        return 'imap.' + email_right;
     }
 
     function validateNext(index) {
