@@ -185,8 +185,7 @@ $(function () {
         }
 
         var i1 = email.indexOf('@');
-        var i2 = email.indexOf(':');
-        var email_right = email.substr(i1 + 1, i2 - i1);
+        var email_right = email.substr(i1 + 1);
         return 'imap.' + email_right;
     }
 
