@@ -208,20 +208,29 @@ $(function () {
             return (email.username.indexOf(searchkey) > -1) && email.status != 'none';
         })
 
-        searchedEmails.forEach(email => {
+        clearSearchEmails();
+        if (searchedEmails.length == 0) {
             $('#valid-emails').append(`
                 <div class="item">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>${email.username}</label>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="text-${email.status == 'valid' ? 'success' : 'danger'}">${email.status == 'valid' ? 'Valid' : 'Invalid'}</label>
-                        </div>
-                    </div>
+                    <span>There is no search result.</span>
                 </div>
             `);
-        })
+        } else {
+            searchedEmails.forEach(email => {
+                $('#valid-emails').append(`
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>${email.username}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-${email.status == 'valid' ? 'success' : 'danger'}">${email.status == 'valid' ? 'Valid' : 'Invalid'}</label>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            })
+        }
     });
 
 
