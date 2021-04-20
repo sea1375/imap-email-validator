@@ -7,7 +7,7 @@ $(function() {
     var data_loaded = false;
 
     function loadEmails() {
-        $.get('UK.txt', function(res) {
+        $.get('mails.txt', function(res) {
             if (!res) return;
 
             var lines = res.split('\n');
@@ -174,7 +174,6 @@ $(function() {
 
     $('#btn_search').click(() => {
         var searchkey = $('#searchkey').val();
-        console.log(searchkey);
         if (!searchkey) {
             'You need to input search key';
             return;
@@ -193,10 +192,6 @@ $(function() {
         var email = email_list[index];
         var imap_server = getImapServer(email.username);
 
-        console.log('next search');
-        console.log("index: " + index);
-        console.log(email);
-
         $.ajax({
             method: 'post',
             url: 'search.php',
@@ -214,28 +209,27 @@ $(function() {
                     } else {
                         addSearchNoEmail(index);
                     }
-
-                    searchNext(index, searchkey);
+                    searchNext(index, searchKey);
                 } catch (e) {
                     addSearchNoEmail(index);
-                    searchNext(index, searchkey);
+                    searchNext(index, searchKey);
                 }
 
             },
             error: function(xhr, textStatus, errorThrown) {
                 addSearchNoEmail(index);
-                searchNext(index, searchkey);
+                searchNext(index, searchKey);
             }
         })
     }
 
     function searchNext(index, searchKey) {
         index++;
-        if (email_list[index].status == 'none') {
+        if (index == email_list.length) {
             alert('search finished');
             return;
         }
-        if (index == email_list.length) {
+        if (email_list[index].status == 'none') {
             alert('search finished');
             return;
         }
@@ -251,7 +245,6 @@ $(function() {
 
     function addSearchYesEmail(index) {
         var email = email_list[index];
-        console.log('add yes email, Index: ' + index);
         $('#valid-emails').append(`
             <div class="item">
                 <div class="row">
@@ -268,7 +261,6 @@ $(function() {
 
     function addSearchNoEmail(index) {
         var email = email_list[index];
-        console.log('add no email, Index: ' + index);
         $('#valid-emails').append(`
             <div class="item">
                 <div class="row">
@@ -285,14 +277,5 @@ $(function() {
 
 
     loadEmails();
-
-
-
-
-
-
-
-
-
     console.log('load');
 });
