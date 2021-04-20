@@ -115,7 +115,7 @@ $(function() {
     });
 
     function validateEmail(index) {
-        email = email_list[index];
+        var email = email_list[index];
         var imap_server = getImapServer(email.username);
 
 
@@ -222,7 +222,7 @@ $(function() {
     });
 
     function searchEmail(index, searchKey) {
-        email = email_list[index];
+        var email = email_list[index];
         var imap_server = getImapServer(email.username);
 
         $.ajax({
