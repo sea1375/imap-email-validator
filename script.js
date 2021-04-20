@@ -29,9 +29,6 @@ $(function() {
     function loadServers() {
         $.get('imap_server.json', function(data) {
             imap_servers = data;
-
-            console.log(imap_servers);
-            console.log(email_list);
             data_loaded = true;
             showData();
         }, 'JSON');
