@@ -84,11 +84,14 @@ $(function() {
         $('#valid-emails').html(`
             <div class="item">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <label class="fw-bold">Email</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <label class="fw-bold">Status</label>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="fw-bold">Matched Mail Count</label>
                     </div>
                 </div>
             </div>
@@ -205,7 +208,7 @@ $(function() {
                 try {
                     var res = JSON.parse(data);
                     if (res.success) {
-                        addSearchYesEmail(index);
+                        addSearchYesEmail(index, data.count);
                     } else {
                         addSearchNoEmail(index);
                     }
@@ -243,16 +246,19 @@ $(function() {
 
     }
 
-    function addSearchYesEmail(index) {
+    function addSearchYesEmail(index, count) {
         var email = email_list[index];
         $('#valid-emails').append(`
             <div class="item">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <label>${email.username}</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <label class="text-success">Yes</label>
+                    </div>
+                    <div class="col-md-5">
+                        <label>${count}</label>
                     </div>
                 </div>
             </div>
@@ -264,11 +270,14 @@ $(function() {
         $('#valid-emails').append(`
             <div class="item">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <label>${email.username}</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <label class="text-danger">No</label>
+                    </div>
+                    <div class="col-md-5">
+                        <label></label>
                     </div>
                 </div>
             </div>
