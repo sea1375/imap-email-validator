@@ -2,6 +2,7 @@ $(function() {
     console.log('file loading');
 
     var email_list = [];
+    var valid_emails = [];
     var imap_servers;
     var data_loaded = false;
 
@@ -60,35 +61,11 @@ $(function() {
     function addValidEmail(index) {
         email_list[index].status = 'valid';
         $('#email_' + index + ' .status').html('<label class="text-success">Valid</label>');
-        // $('#valid-emails').append(`
-        //     <div class="item">
-        //         <div class="row">
-        //             <div class="col-md-6">
-        //                 <label>${email}</label>
-        //             </div>
-        //             <div class="col-md-6">
-        //                 <label class="text-success">Valid</label>
-        //             </div>
-        //         </div>
-        //     </div>
-        // `);
     }
 
     function addInvalidEmail(index) {
         email_list[index].status = 'invalid';
         $('#email_' + index + ' .status').html('<label class="text-danger">Invalid</label>');
-        // $('#valid-emails').append(`
-        //     <div class="item">
-        //         <div class="row">
-        //             <div class="col-md-6">
-        //                 <label>${email}</label>
-        //             </div>
-        //             <div class="col-md-6">
-        //                 <label class="text-danger">Invalid</label>
-        //             </div>
-        //         </div>
-        //     </div>
-        // `);
     }
 
     function clearValidEmails() {
@@ -205,35 +182,127 @@ $(function() {
             return;
         }
 
-        var searchedEmails = email_list.filter(email => {
-            return (email.username.indexOf(searchkey) > -1) && email.status != 'none';
-        })
-
-        clearSearchEmails();
-        if (searchedEmails.length == 0) {
-            $('#valid-emails').append(`
-                <div class="item">
-                    <span>There is no search result.</span>
-                </div>
-            `);
+        if (email_list[0].status != 'none') {
+            clearSearchEmails();
+            searchEmail(0, searchKey);
         } else {
-            searchedEmails.forEach(email => {
-                $('#valid-emails').append(`
-                    <div class="item">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>${email.username}</label>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="text-${email.status == 'valid' ? 'success' : 'danger'}">${email.status == 'valid' ? 'Valid' : 'Invalid'}</label>
-                            </div>
-                        </div>
-                    </div>
-                `);
-            })
+            alert("There isn't validated Emails to search");
+            return;
         }
+
+
+
+        // var searchedEmails = email_list.filter(email => {
+        //     return (email.username.indexOf(searchkey) > -1) && email.status != 'none';
+        // })
+
+        // clearSearchEmails();
+        // if (searchedEmails.length == 0) {
+        //     $('#valid-emails').append(`
+        //         <div class="item">
+        //             <span>There is no search result.</span>
+        //         </div>
+        //     `);
+        // } else {
+        //     searchedEmails.forEach(email => {
+        //         $('#valid-emails').append(`
+        //             <div class="item">
+        //                 <div class="row">
+        //                     <div class="col-md-6">
+        //                         <label>${email.username}</label>
+        //                     </div>
+        //                     <div class="col-md-6">
+        //                         <label class="text-${email.status == 'valid' ? 'success' : 'danger'}">${email.status == 'valid' ? 'Valid' : 'Invalid'}</label>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         `);
+        //     })
+        // }
     });
 
+    function searchEmail(index, searchKey) {
+        $.ajax({
+            method: 'post',
+            url: 'search.php',
+            data: {
+                imap_server: imap_server,
+                username: email.username,
+                password: email.password,
+                searchKey: searchKey
+            },
+            success: function(data, textStatus) {
+                try {
+                    var res = JSON.parse(data);
+                    if (res.success) {
+                        addSearchYesEmail(index);
+                    } else {
+                        addSearchNoEmail(index);
+                    }
+
+                    searchNext(index, searchkey);
+                } catch (e) {
+                    addSearchNoEmail(index);
+                    searchNext(index, searchkey);
+                }
+
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                addSearchNoEmail(index);
+                searchNext(index, searchkey);
+            }
+        })
+    }
+
+    function searchNext(index, searchKey) {
+        index++;
+        if (email_list[index].status == 'none') {
+            alert('search finished');
+            return;
+        }
+        if (index == email_list.length) {
+            alert('search finished');
+            return;
+        }
+        if (email_list[index].status == 'invalid') {
+            searchNext(index, searchKey);
+        } else {
+            searchEmail(index, searchKey);
+        }
+
+    }
+
+    function addSearchYesEmail(index) {
+        var email = email_list[index]
+        $('#valid-emails').append(`
+            <div class="item">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>${email.username}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-success">Yes</label>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+
+    function addSearchNoEmail(index) {
+        var email = email_list[index]
+        $('#valid-emails').append(`
+            <div class="item">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>${email.username}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-danger">No</label>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
 
 
     loadEmails();
