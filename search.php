@@ -11,7 +11,7 @@
         $mbox = imap_open($host,$username,$password, NULL, 1, array('DISABLE_AUTHENTICATOR' => 'GSSAPI')) or die('Cannot connect: ' . imap_last_error());
         $MC = imap_check($mbox);
         
-        $uids   = imap_search($mbox, 'BODY "'.$searchKey.'"', SE_UID);
+        $uids   = imap_search($mbox, 'TEXT "'.$searchKey.'"', SE_UID);
         
         if ($uids) {
             echo json_encode(array(
