@@ -190,41 +190,15 @@ $(function() {
             alert("There isn't validated Emails to search");
             return;
         }
-
-
-
-        // var searchedEmails = email_list.filter(email => {
-        //     return (email.username.indexOf(searchkey) > -1) && email.status != 'none';
-        // })
-
-        // clearSearchEmails();
-        // if (searchedEmails.length == 0) {
-        //     $('#valid-emails').append(`
-        //         <div class="item">
-        //             <span>There is no search result.</span>
-        //         </div>
-        //     `);
-        // } else {
-        //     searchedEmails.forEach(email => {
-        //         $('#valid-emails').append(`
-        //             <div class="item">
-        //                 <div class="row">
-        //                     <div class="col-md-6">
-        //                         <label>${email.username}</label>
-        //                     </div>
-        //                     <div class="col-md-6">
-        //                         <label class="text-${email.status == 'valid' ? 'success' : 'danger'}">${email.status == 'valid' ? 'Valid' : 'Invalid'}</label>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //         `);
-        //     })
-        // }
     });
 
     function searchEmail(index, searchKey) {
         var email = email_list[index];
         var imap_server = getImapServer(email.username);
+
+        console.log('next search');
+        console.log("index: " + index);
+        console.log(email);
 
         $.ajax({
             method: 'post',
@@ -270,8 +244,10 @@ $(function() {
         }
         if (email_list[index].status == 'invalid') {
             searchNext(index, searchKey);
-        } else {
+            return;
+        } else if (email_list[index].status == 'valid') {
             searchEmail(index, searchKey);
+            return;
         }
 
     }
