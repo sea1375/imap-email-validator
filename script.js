@@ -184,7 +184,7 @@ $(function() {
 
         if (email_list[0].status != 'none') {
             clearSearchEmails();
-            searchEmail(0, searchKey);
+            searchEmail(0, searchkey);
         } else {
             alert("There isn't validated Emails to search");
             return;
