@@ -7,7 +7,7 @@ $(function() {
     var data_loaded = false;
 
     function loadEmails() {
-        $.get('mails.txt', function(res) {
+        $.get('UK.txt', function(res) {
             if (!res) return;
 
             var lines = res.split('\n');
