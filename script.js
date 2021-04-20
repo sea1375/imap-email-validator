@@ -222,6 +222,9 @@ $(function() {
     });
 
     function searchEmail(index, searchKey) {
+        email = email_list[index];
+        var imap_server = getImapServer(email.username);
+
         $.ajax({
             method: 'post',
             url: 'search.php',
