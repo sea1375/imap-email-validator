@@ -208,7 +208,7 @@ $(function() {
                 try {
                     var res = JSON.parse(data);
                     if (res.success) {
-                        addSearchYesEmail(index, data.count);
+                        addSearchYesEmail(index, res.count);
                     } else {
                         addSearchNoEmail(index);
                     }
