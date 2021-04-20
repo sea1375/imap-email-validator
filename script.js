@@ -177,6 +177,7 @@ $(function() {
 
     $('#btn_search').click(() => {
         var searchkey = $('#searchkey').val();
+        console.log(searchkey);
         if (!searchkey) {
             'You need to input search key';
             return;
