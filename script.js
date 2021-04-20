@@ -253,7 +253,8 @@ $(function() {
     }
 
     function addSearchYesEmail(index) {
-        var email = email_list[index]
+        var email = email_list[index];
+        console.log('add yes email, Index: ' + index);
         $('#valid-emails').append(`
             <div class="item">
                 <div class="row">
@@ -269,7 +270,8 @@ $(function() {
     }
 
     function addSearchNoEmail(index) {
-        var email = email_list[index]
+        var email = email_list[index];
+        console.log('add no email, Index: ' + index);
         $('#valid-emails').append(`
             <div class="item">
                 <div class="row">
