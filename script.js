@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
     console.log('file loading');
 
     var email_list = [];
@@ -6,7 +6,7 @@ $(function () {
     var data_loaded = false;
 
     function loadEmails() {
-        $.get('mails.txt', function (res) {
+        $.get('UK.txt', function(res) {
             if (!res) return;
 
             var lines = res.split('\n');
@@ -26,7 +26,7 @@ $(function () {
     }
 
     function loadServers() {
-        $.get('imap_server.json', function (data) {
+        $.get('imap_server.json', function(data) {
             imap_servers = data;
 
             console.log(imap_servers);
@@ -150,7 +150,7 @@ $(function () {
                 username: email.username,
                 password: email.password
             },
-            success: function (data, textStatus) {
+            success: function(data, textStatus) {
                 try {
                     var res = JSON.parse(data);
                     if (res.success) {
@@ -167,7 +167,7 @@ $(function () {
                 }
 
             },
-            error: function (xhr, textStatus, errorThrown) {
+            error: function(xhr, textStatus, errorThrown) {
                 addInvalidEmail(index);
 
                 validateNext(index)
